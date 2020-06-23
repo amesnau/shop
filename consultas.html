@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Document</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <style>
+         body {
+            font-family: Arial, Helvetica, sans-serif;
+         }
+
+         table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+         }
+
+         td,
+         th {
+            border: 1px solid #dddddd;
+            padding: 8px;
+         }
+         td {
+            text-align: left;
+         }
+         th {
+            text-align: center;
+         }
+
+         tr:nth-child(even) {
+            background-color: #dddddd;
+         }
+         thead {
+            background-color: beige;
+            color: black;
+         }
+
+         #titulo {
+            position: relative;
+            font-size: 1.5rem;
+            left: 35%;
+         }
+      </style>
+   </head>
+   <body>
+      <script>
+         var message = "INVENTARIO DE CDs";
+         var neonbasecolor = "blue";
+         var neontextcolor = "red";
+         var flashspeed = 100; //in milliseconds
+
+         var n = 0;
+         if (document.all || document.getElementById) {
+            document.write('<font id="titulo" color="' + neonbasecolor + '">');
+            for (m = 0; m < message.length; m++)
+               document.write(
+                  '<span id="neonlight' +
+                     m +
+                     '">' +
+                     message.charAt(m) +
+                     "</span>"
+               );
+            document.write("</font><br /><br />");
+         } else document.write(message);
+
+         beginneon();
+
+         document.write(
+            `<button role="link" onclick="window.location = 'fran4.html'">CDs Enquiry</button >`
+         );
+         document.write(
+            //  `<button role="link" onclick="window.location = 'fran4.html'">Click</button >
+            // `<input type="button" value="CDs Enquiry" onclick="visualizar()" />
+
+            `<input type="button" value="CDs printout" onclick="printOut()" />
+           <div id="cargaexterna"></div>`
+         );
+
+         function printOut() {
+            $(document).ready(function () {
+               $.post("fran4.php", function (htmlexterno) {
+                  $("#cargaexterna").html(htmlexterno);
+               });
+            });
+         }
+         function visualizar() {
+            $(document).ready(function () {
+               $.post("fran4.html", function (htmlexterno) {
+                  $("#cargaexterna").html(htmlexterno);
+               });
+            });
+         }
+         function crossref(number) {
+            var crossobj = document.all
+               ? eval("document.all.neonlight" + number)
+               : document.getElementById("neonlight" + number);
+            return crossobj;
+         }
+
+         function neon() {
+            //Change all letters to base color
+            if (n == 0) {
+               for (
+                  m = 0;
+                  m < message.length;
+                  m++ //eval("document.all.neonlight"+m).style.color=neonbasecolor
+               )
+                  crossref(m).style.color = neonbasecolor;
+            } //cycle through and change individual letters to neon color
+            crossref(n).style.color = neontextcolor;
+            if (n < message.length - 1) n++;
+            else {
+               n = 0;
+               clearInterval(flashing);
+               setTimeout("beginneon()", 1500);
+               return;
+            }
+         }
+         function beginneon() {
+            if (document.all || document.getElementById)
+               flashing = setInterval("neon()", flashspeed);
+         }
+         // $(document).ready(function () {
+         //    $("#tit1").click(function () {
+         //       $("#tit1").css({ color: "red", background: "yellow" });
+         //    });
+         // });
+      </script>
+   </body>
+</html>

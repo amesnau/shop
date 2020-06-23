@@ -1,0 +1,23 @@
+Host: brtqr8tlpyqttbyifwek-mysql.services.clever-cloud.com
+Database Name: brtqr8tlpyqttbyifwek
+User: uuqjxxmk7bhyro8h
+Password: j2RL6mQ6muzCz6EbXTY7
+Port: 3306
+MySql CLI: mysql -h brtqr8tlpyqttbyifwek-mysql.services.clever-cloud.com -P 3306 -u uuqjxxmk7bhyro8h -p brtqr8tlpyqttbyifwek
+Restoring backups: mysql -h brtqr8tlpyqttbyifwek-mysql.services.clever-cloud.com -P 3306 -u uuqjxxmk7bhyro8h -p brtqr8tlpyqttbyifwek < YOUR_BACKUP_FILE
+
+CREATE TABLE cdinventory (
+    -> id INT NOT NULL AUTO_INCREMENT,
+    -> title VARCHAR(60) NOT NULL,
+    -> artist VARCHAR(50) NOT NULL,
+    -> country VARCHAR(30) NOT NULL,
+    -> company VARCHAR(40),
+    -> price FLOAT(5,2) NOT NULL,
+    -> titleyear YEAR(4) NOT NULL,
+    -> imagen VARCHAR(15),
+    -> available INT(5) NOT NULL,
+    -> reg_date timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    -> PRIMARY KEY (id)
+    -> );
+
+LOAD DATA INFILE 'c:\xampp\cargadatos.txt' INTO TABLE cdinventory FIELDS TERMINATED BY '"' ENCLOSED BY '"' ESCAPED BY '"' LINES TERMINATED BY '/r/n';

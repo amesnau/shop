@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <!-- <link rel="stylesheet" type="text/css" href="../css/sanitize.css"> -->
+      <title>Document</title>
+      <style>
+         html {
+            box-sizing: border-box;
+         }
+
+         .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-rows: repeat(10, minmax(240px, 1fr));
+            grid-gap: 1rem;
+            justify-items: stretch;
+            align-items: stretch;
+            background-color: rgb(250, 250, 244);
+         }
+
+         .clase {
+            border: 1.5px solid brown;
+            text-align: left;
+            color: blue;
+            background-blend-mode: lighten;
+            background-repeat: no-repeat;
+            background-size: 167%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+         }
+
+         .rotar {
+            transform: rotateY(180deg);
+         }
+
+         .rotarp {
+            transform: rotateY(180deg);
+         }
+
+         #titulo {
+            position: relative;
+            font-size: 1.5rem;
+            left: 35%;
+         }
+
+         .centrado {
+            text-align: center;
+            font-size: 1.8rem;
+            background-color: rgba(216, 213, 213, 0.7);
+         }
+
+         p {
+            margin-left: 0.625rem;
+            margin-right: 0.625rem;
+         }
+      </style>
+   </head>
+
+   <body>
+      <script>
+         var url = [];
+         var message = "INVENTARIO DE CDs";
+         var neonbasecolor = "blue";
+         var neontextcolor = "red";
+         var flashspeed = 100; //in milliseconds
+
+         var n = 0;
+         if (document.all || document.getElementById) {
+            document.write('<font id="titulo" color="' + neonbasecolor + '">');
+            for (m = 0; m < message.length; m++)
+               document.write(
+                  '<span id="neonlight' +
+                     m +
+                     '">' +
+                     message.charAt(m) +
+                     "</span>"
+               );
+            document.write("</font><br /><br />");
+         } else document.write(message);
+
+         beginneon();
+
+         let boton1 = document.createElement("button");
+         boton1.type = "button";
+         boton1.textContent = "Click";
+         boton1.addEventListener("click", loadXMLDoc, false);
+         // let boton2 = document.createElement("button");
+         // boton2.type = "button";
+         // boton2.role = "link";
+         // boton2.click = "http://localhost/videoclub/fran4.php";
+         // boton2.textContent = "Click";
+         // boton2.addEventListener("click", printOut, false);
+
+         let parrafo1 = document.createElement("span");
+         parrafo1.type = "span";
+         parrafo1.textContent = "Enquiry by title...";
+         let parrafo2 = document.createElement("span");
+         parrafo2.type = "span";
+         parrafo2.textContent = "Inventory report...";
+
+         document.body.appendChild(parrafo1);
+         document.body.appendChild(boton1);
+         document.write("<br />");
+         document.write("<br />");
+         document.body.appendChild(parrafo2);
+         document.write(
+            `<button role="link" onclick="window.location = 'fran4.php'">Click</button >`
+         );
+         // document.body.appendChild(boton2);
+         document.write("<br />");
+
+         window.onload = function () {
+            // Crea objeto http para leer bases de datos
+            var xmlhttp;
+            var txt, x, i;
+            var texto = [];
+            xmlhttp = new XMLHttpRequest();
+            //Lectura del estado del request con ajax
+            xmlhttp.onreadystatechange = function () {
+               // Convierte codigo JASON a array
+               if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                  cdsInventory = JSON.parse(this.responseText);
+               }
+            };
+            //Apertura y envío de request del archivo con ajax
+            xmlhttp.open("GET", "frank2.php", true);
+            xmlhttp.send();
+         };
+         function loadXMLDoc() {
+            // Crea en variable main nodo div class container
+            // y lo agrega al DOM generando el grid
+            var index = [];
+            // Se crea objeto para crear elemento div
+            main = document.createElement("MyDiv");
+            // Se definen los atributos del elemento html
+            main.setAttribute("id", "MyDiv");
+            main.setAttribute("class", "container");
+            // Se agrega al DOM
+            document.body.appendChild(main);
+            for (let i in cdsInventory) {
+               // Elementos p creados
+               index[i] = i;
+               p = document.createElement("p");
+               p1 = document.createElement("p");
+               p2 = document.createElement("p");
+               p3 = document.createElement("p");
+               p4 = document.createElement("p");
+               p5 = document.createElement("p");
+               p6 = document.createElement("p");
+               nodo = document.createElement("div");
+               nodo.className = "clase";
+               nodo.id = "d" + i;
+               // Se crean eventos para la entrada y salida de los div
+               nodo.addEventListener("mousedown", myFunction, false);
+               // Se actualizan los textos a mostrar en los elementos p
+               p.textContent = cdsInventory[i]["title"];
+               p.className = "centrado";
+               p.id = "d" + i + "p0";
+               p1.textContent = "Artist: " + cdsInventory[i]["artist"];
+               p1.id = "d" + i + "p1";
+               p2.textContent = "Company: " + cdsInventory[i]["company"];
+               p2.id = "d" + i + "p2";
+               p3.textContent = "Year: " + cdsInventory[i]["titleyear"];
+               p3.id = "d" + i + "p3";
+               p4.textContent = "Price: : " + cdsInventory[i]["price"];
+               p4.id = "d" + i + "p4";
+               p4.style.display = "none";
+               p5.textContent = "Country: " + cdsInventory[i]["country"];
+               p5.id = "d" + i + "p5";
+               p6.textContent = "Available: " + cdsInventory[i]["available"];
+               p6.id = "d" + i + "p6";
+               p6.style.display = "none";
+               if (cdsInventory[i]["available"] == "0") {
+                  p4.style.color = "red";
+                  p6.style.color = "red";
+                  p6.textContent += "  (restocking)";
+               }
+
+               url["d" + i] = cdsInventory[i]["imagen"];
+               // Se agregan los elementos recien creados
+               main.appendChild(nodo);
+               nodo.appendChild(p);
+               nodo.appendChild(p1);
+               nodo.appendChild(p2);
+               nodo.appendChild(p3);
+               nodo.appendChild(p4);
+               nodo.appendChild(p5);
+               nodo.appendChild(p6);
+               aver = document.getElementsByClassName("clase");
+               imagen = `"./images/${url["d" + i]}"`;
+               aver[i].style.backgroundImage = `url(${imagen})`;
+            }
+         }
+         // function printOut() {
+         //    // Crea objeto http para leer bases de datos
+         //    var xmlhttp;
+         //    xmlhttp = new XMLHttpRequest();
+         //    //Lectura del estado del request con ajax
+         //    xmlhttp.onreadystatechange = function () {
+         //       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+         //          prompt("Lo hizo");
+         //       }
+         //    };
+         //    //Apertura y envío de request del archivo con ajax
+         //    xmlhttp.open("GET", "fran4.php", true);
+         //    xmlhttp.send();
+         // }
+         function myFunction(e) {
+            // var es_Chrome = navigator.userAgent.toLowerCase().indexOf('edg') > -1;
+            // let es_Firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+            // if (es_Firefox) {
+            // } else {
+            // }
+            let es_evento = e.type;
+            division = e.currentTarget.id;
+            cdVisualizado = document.getElementById(division);
+            if (cdVisualizado.className == "clase rotar") {
+               cdVisualizado.className = "clase";
+               elementoP = document.getElementById(division + "p0");
+               elementoP.className = "centrado";
+
+               elementoP4 = document.getElementById(division + "p4").style;
+               elementoP4.display = "none";
+               elementoP6 = document.getElementById(division + "p6").style;
+               elementoP6.display = "none";
+               elementoP1 = document.getElementById(division + "p1").style;
+               elementoP1.display = "block";
+               elementoP2 = document.getElementById(division + "p2").style;
+               elementoP2.display = "block";
+               elementoP3 = document.getElementById(division + "p3").style;
+               elementoP3.display = "block";
+               elementoP5 = document.getElementById(division + "p5").style;
+               elementoP5.display = "block";
+               aver = document.getElementById(division);
+               imagen = `"./images/${url[division]}"`;
+               aver.style.backgroundImage = `url(${imagen})`;
+            } else {
+               cdVisualizado.className = "clase rotar";
+               elementoP = document.getElementById(division + "p0");
+               elementoP.className = "centrado rotarp";
+               elementoP1 = document.getElementById(division + "p1").style;
+               elementoP1.display = "none";
+               elementoP2 = document.getElementById(division + "p2").style;
+               elementoP2.display = "none";
+               elementoP3 = document.getElementById(division + "p3").style;
+               elementoP3.display = "none";
+               elementoP5 = document.getElementById(division + "p5").style;
+               elementoP5.display = "none";
+               elementoP4 = document.getElementById(division + "p4").style;
+               elementoP4.display = "block";
+               elementoP6 = document.getElementById(division + "p6").style;
+               elementoP6.display = "block";
+               elementoP6 = document.getElementById(division + "p6");
+               elementoP6.className = "rotarp";
+               elementoP4 = document.getElementById(division + "p4");
+               elementoP4.className = "rotarp";
+               aver = document.getElementById(division);
+               aver.style.backgroundImage = `none`;
+            }
+         }
+         function crossref(number) {
+            var crossobj = document.all
+               ? eval("document.all.neonlight" + number)
+               : document.getElementById("neonlight" + number);
+            return crossobj;
+         }
+
+         function neon() {
+            //Change all letters to base color
+            if (n == 0) {
+               for (
+                  m = 0;
+                  m < message.length;
+                  m++ //eval("document.all.neonlight"+m).style.color=neonbasecolor
+               )
+                  crossref(m).style.color = neonbasecolor;
+            } //cycle through and change individual letters to neon color
+            crossref(n).style.color = neontextcolor;
+            if (n < message.length - 1) n++;
+            else {
+               n = 0;
+               clearInterval(flashing);
+               setTimeout("beginneon()", 1500);
+               return;
+            }
+         }
+         function beginneon() {
+            if (document.all || document.getElementById)
+               flashing = setInterval("neon()", flashspeed);
+         }
+      </script>
+   </body>
+</html>
