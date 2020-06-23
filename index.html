@@ -67,10 +67,10 @@
          beginneon();
 
          document.write(
-            `<button role="link" onclick="window.location = 'fran4.html'">CDs Enquiry</button >`
+            `<button role="link" onclick="window.location = 'enquiry.html'">CDs Enquiry</button >`
          );
          document.write(
-            //  `<button role="link" onclick="window.location = 'fran4.html'">Click</button >
+            //  `<button role="link" onclick="window.location = 'printout.html'">Click</button >
             // `<input type="button" value="CDs Enquiry" onclick="visualizar()" />
 
             `<input type="button" value="CDs printout" onclick="printOut()" />
@@ -79,14 +79,14 @@
 
          function printOut() {
             $(document).ready(function () {
-               $.post("fran4.php", function (htmlexterno) {
+               $.post("printout.php", function (htmlexterno) {
                   $("#cargaexterna").html(htmlexterno);
                });
             });
          }
          function visualizar() {
             $(document).ready(function () {
-               $.post("fran4.html", function (htmlexterno) {
+               $.post("printout.html", function (htmlexterno) {
                   $("#cargaexterna").html(htmlexterno);
                });
             });
