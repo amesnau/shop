@@ -5,18 +5,18 @@ $user = "uuqjxxmk7bhyro8h";
 $pass = "j2RL6mQ6muzCz6EbXTY7";
 $bd = "brtqr8tlpyqttbyifwek";
 
-//Creamos la conexión
+// Coneccting to database
 $conexion = mysqli_connect($server, $user, $pass, $bd)
     or die("Ha sucedido un error inesperado en la conexion de la base de datos");
 
-//generamos la consulta
+//Enquiry generation
 $sql = "SELECT * FROM cdinventory ORDER BY available";
 $result = $conexion->query($sql);
 // $result = $mysqli->query($sql);
 mysqli_set_charset($conexion, "utf8"); //formato de datos utf8
 
 if (!$result = mysqli_query($conexion, $sql)) die("Error inesperado en el select");
-
+//Displaying database data
 while ($row = mysqli_fetch_array($result)) {
     $title = $row['title'];
     $artist = $row['artist'];
@@ -34,7 +34,7 @@ while ($row = mysqli_fetch_array($result)) {
     );
 }
 
-//desconectamos la base de datos
+//closing database
 $close = mysqli_close($conexion)
     or die("Ha sucedido un error inesperado en la desconexion de la base de datos");
 // $file = 'mycds.json';
@@ -42,7 +42,7 @@ $close = mysqli_close($conexion)
 // file_put_contents($file, $json_string);
 
 
-//Creamos el JSON
+// for future purposes
 // echo json_encode($cds);
 
 echo '<div id="printout">';
